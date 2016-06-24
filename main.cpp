@@ -22,7 +22,7 @@ s = s.substr(first, last-first+1);
 int main() {
     ifstream ifs("/home/fil/appodeal.txt");
     std::string ss;
-    list<string> myList, mList;
+    list<string> hwvList, uaList, idList, dimList, languageList;
     while( std::getline(ifs, ss)) {
       if(ss.empty()) continue;
       if(ss == "-------") continue;
@@ -30,23 +30,58 @@ int main() {
     Json::Reader reader;
     Json::Value obj;
     reader.parse(ss, obj); // reader can also read strings
+    const Json::Value& idd = obj["id"];
+    idList.push_back(idd.asString());
     //cout << "id: " << obj["id"].asString() << endl;
     const Json::Value& app = obj["device"]; // array of characters
    // cout << "new id: " << app["id"].asString() << endl;
    // cout << "device ua: " << app["ua"].asString() << endl;
+
    string s = app["hwv"].asString();
-   
+   string s1 = app["ua"].asString();
+   string dim = app["h"].asString() + " x " + app["w"].asString();
+   string language = app["language"].asString();
+
    trim(s);
-   myList.push_back(s);
+   trim(s1);
+   
+   trim(language);
+
+   hwvList.push_back(s);
+   uaList.push_back(s1);
+   dimList.push_back(dim );
+   
+   languageList.push_back(language);
 
     } 
-    myList.sort();
-    myList.unique();  
+    hwvList.sort();
+    hwvList.unique(); 
+    uaList.sort();
+    uaList.unique(); 
+    dimList.sort();
+    dimList.unique();
+    languageList.sort();
+    languageList.unique();
      
     list<string>::iterator it;
-   for( it = myList.begin(); it != myList.end(); ++it) 
-{
-   cout << *it << endl;
-}
+   for( it = hwvList.begin(); it != hwvList.end(); ++it) 
+    {
+    cout << *it << endl;
+    }
+
+  for( it = uaList.begin(); it != uaList.end(); ++it) 
+    {
+     cout << *it << endl;
+    }
+    for( it = dimList.begin(); it != dimList.end(); ++it) 
+    {
+     cout << *it << endl;
+    }
+    
+    for( it = languageList.begin(); it != languageList.end(); ++it) 
+    {
+     cout << *it << endl;
+    }
+    cout << idList.size() << endl;
 }
     
