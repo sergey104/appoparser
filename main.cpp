@@ -23,7 +23,7 @@ int main() {
     ifstream ifs("/home/fil/appodeal.txt");
     std::string ss;
     list<string> hwvList, uaList, idList, dimList, languageList, carrierList, modelList, makeList, connectiontypeList;
-    list<string> devicetypeList, flashverList;
+    list<string> devicetypeList, flashverList, countryList, cityList, nameList;
     while( std::getline(ifs, ss)) {
       if(ss.empty()) continue;
       if(ss == "-------") continue;
@@ -35,6 +35,14 @@ int main() {
     idList.push_back(idd.asString());
     //cout << "id: " << obj["id"].asString() << endl;
     const Json::Value& app = obj["device"]; // array of characters
+    
+    const Json::Value& geo = app["geo"];
+    
+    const Json::Value& user = obj["user"];
+    const Json::Value& data = user["data"];
+    const Json::Value& root1 = data[0];
+   // cout << data << endl;
+    
     cout << "new id: " << app["id"].asString() << endl;
     cout << "device ua: " << app["ua"].asString() << endl;
 
@@ -49,7 +57,10 @@ int main() {
    string devicetype = app["devicetype"].asString();
    string flashver = app["flashver"].asString();
    
+   string country = geo["country"].asString();
+   string city = geo["city"].asString();
    
+   string name = root1["name"].asString();
    
    trim(s);
    trim(s1);
@@ -60,6 +71,9 @@ int main() {
    trim(connectiontype);
    trim(devicetype);
    trim(flashver);
+   trim(country);
+   trim(city);
+   trim(name);
 
    hwvList.push_back(s);
    uaList.push_back(s1);
@@ -70,6 +84,9 @@ int main() {
    connectiontypeList.push_back(connectiontype);
    devicetypeList.push_back(devicetype);
    flashverList.push_back(flashver);
+   countryList.push_back(country);
+   cityList.push_back(city);
+   nameList.push_back(name);
    
   languageList.push_back(language);
 
@@ -94,6 +111,12 @@ int main() {
     devicetypeList.unique();
     flashverList.sort();
     flashverList.unique();
+    countryList.sort();
+    countryList.unique();
+    cityList.sort();
+    cityList.unique();
+    nameList.sort();
+    nameList.unique();
      
     list<string>::iterator it;
     for( it = hwvList.begin(); it != hwvList.end(); ++it) 
@@ -139,6 +162,21 @@ int main() {
     {
     cout << *it << endl;
     }
+    cout << "country" << endl;
+    for( it = countryList.begin(); it != countryList.end(); ++it) 
+    {
+    cout << *it << endl;
+    }
+    cout << "city field" << endl;
+    for( it = cityList.begin(); it != cityList.end(); ++it) 
+    {
+    cout << *it << endl;
+    } 
+    cout << "user name field" << endl;
+    for( it = nameList.begin(); it != nameList.end(); ++it) 
+    {
+    cout << *it << endl;
+    } 
     cout << "2" << idList.size() << endl;
 }
     
