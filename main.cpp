@@ -22,7 +22,8 @@ s = s.substr(first, last-first+1);
 int main() {
     ifstream ifs("/home/fil/appodeal.txt");
     std::string ss;
-    list<string> hwvList, uaList, idList, dimList, languageList;
+    list<string> hwvList, uaList, idList, dimList, languageList, carrierList, modelList, makeList, connectiontypeList;
+    list<string> devicetypeList, flashverList;
     while( std::getline(ifs, ss)) {
       if(ss.empty()) continue;
       if(ss == "-------") continue;
@@ -41,15 +42,34 @@ int main() {
    string s1 = app["ua"].asString();
    string dim = app["h"].asString() + " x " + app["w"].asString();
    string language = app["language"].asString();
-
+   string carrier = app["carrier"].asString();
+   string model = app["model"].asString();
+   string make = app["make"].asString();
+   string connectiontype = app["connectiontype"].asString();
+   string devicetype = app["devicetype"].asString();
+   string flashver = app["flashver"].asString();
+   
+   
+   
    trim(s);
    trim(s1);
-   
+   trim(carrier);
    trim(language);
+   trim(model);
+   trim(make);
+   trim(connectiontype);
+   trim(devicetype);
+   trim(flashver);
 
    hwvList.push_back(s);
    uaList.push_back(s1);
    dimList.push_back(dim );
+   carrierList.push_back(carrier);
+   modelList.push_back(model);
+   makeList.push_back(make);
+   connectiontypeList.push_back(connectiontype);
+   devicetypeList.push_back(devicetype);
+   flashverList.push_back(flashver);
    
   languageList.push_back(language);
 
@@ -62,6 +82,18 @@ int main() {
     dimList.unique();
     languageList.sort();
     languageList.unique();
+    carrierList.sort();
+    carrierList.unique();
+    modelList.sort();
+    modelList.unique();
+    makeList.sort();
+    makeList.unique();
+    connectiontypeList.sort();
+    connectiontypeList.unique();
+    devicetypeList.sort();
+    devicetypeList.unique();
+    flashverList.sort();
+    flashverList.unique();
      
     list<string>::iterator it;
     for( it = hwvList.begin(); it != hwvList.end(); ++it) 
@@ -82,6 +114,31 @@ int main() {
     {
     cout << *it << endl;
     }
-    cout << idList.size() << endl;
+    
+    for( it = carrierList.begin(); it != carrierList.end(); ++it) 
+    {
+    cout << *it << endl;
+    }
+    for( it = modelList.begin(); it != modelList.end(); ++it) 
+    {
+    cout << *it << endl;
+    }
+    for( it = makeList.begin(); it != makeList.end(); ++it) 
+    {
+    cout << *it << endl;
+    }
+    for( it = connectiontypeList.begin(); it != connectiontypeList.end(); ++it) 
+    {
+    cout << *it << endl;
+    }
+    for( it = devicetypeList.begin(); it != devicetypeList.end(); ++it) 
+    {
+    cout << *it << endl;
+    }
+    for( it = flashverList.begin(); it != flashverList.end(); ++it) 
+    {
+    cout << *it << endl;
+    }
+    cout << "2" << idList.size() << endl;
 }
     
