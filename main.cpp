@@ -34,8 +34,8 @@ int main() {
     idList.push_back(idd.asString());
     //cout << "id: " << obj["id"].asString() << endl;
     const Json::Value& app = obj["device"]; // array of characters
-   // cout << "new id: " << app["id"].asString() << endl;
-   // cout << "device ua: " << app["ua"].asString() << endl;
+    cout << "new id: " << app["id"].asString() << endl;
+    cout << "device ua: " << app["ua"].asString() << endl;
 
    string s = app["hwv"].asString();
    string s1 = app["ua"].asString();
@@ -51,7 +51,7 @@ int main() {
    uaList.push_back(s1);
    dimList.push_back(dim );
    
-   languageList.push_back(language);
+  languageList.push_back(language);
 
     } 
     hwvList.sort();
@@ -64,12 +64,12 @@ int main() {
     languageList.unique();
      
     list<string>::iterator it;
-   for( it = hwvList.begin(); it != hwvList.end(); ++it) 
+    for( it = hwvList.begin(); it != hwvList.end(); ++it) 
     {
     cout << *it << endl;
     }
 
-  for( it = uaList.begin(); it != uaList.end(); ++it) 
+    for( it = uaList.begin(); it != uaList.end(); ++it) 
     {
      cout << *it << endl;
     }
@@ -80,7 +80,7 @@ int main() {
     
     for( it = languageList.begin(); it != languageList.end(); ++it) 
     {
-     cout << *it << endl;
+    cout << *it << endl;
     }
     cout << idList.size() << endl;
 }
