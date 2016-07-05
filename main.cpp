@@ -41,10 +41,16 @@ int main() {
     const Json::Value& user = obj["user"];
     const Json::Value& data = user["data"];
     const Json::Value& root1 = data[0];
+    string country = geo["country"].asString();
+    string city = geo["city"].asString();
+    trim(country);
+    trim(city);
+
+    if((country != "BLR") && (country !="UKR")) continue;
    // cout << data << endl;
     
-    cout << "new id: " << app["id"].asString() << endl;
-    cout << "device ua: " << app["ua"].asString() << endl;
+   // cout << "new id: " << app["id"].asString() << endl;
+  //  cout << "device ua: " << app["ua"].asString() << endl;
 
    string s = app["hwv"].asString();
    string s1 = app["ua"].asString();
@@ -57,8 +63,8 @@ int main() {
    string devicetype = app["devicetype"].asString();
    string flashver = app["flashver"].asString();
    
-   string country = geo["country"].asString();
-   string city = geo["city"].asString();
+   country = geo["country"].asString();
+   city = geo["city"].asString();
    
    string name = root1["name"].asString();
    
@@ -117,66 +123,103 @@ int main() {
     cityList.unique();
     nameList.sort();
     nameList.unique();
-     
+    
+    cout << "Total number of jason requests: " << "2" << idList.size() << endl;
+    cout << "-----------------------------------\n" << "HWV field" << endl;
+    cout << "HWV - " << "Hardware version of the device (e.g., “5S” for iPhone 5S)." << endl << endl << endl;
     list<string>::iterator it;
     for( it = hwvList.begin(); it != hwvList.end(); ++it) 
     {
     cout << *it << endl;
     }
 
+    cout << "-----------------------------------\n" << "UA field"  << endl; 
+    cout << "UA - " << "Browser user agent string." << endl << endl;
     for( it = uaList.begin(); it != uaList.end(); ++it) 
     {
      cout << *it << endl;
     }
+    
+    cout << "-----------------------------------\n" << "Dimensions field h x w"  << endl; 
+    cout << "Dimensions h and w - " << "Physical height of the screen in pixels X Physical width of the screen in pixels" << endl << endl;
     for( it = dimList.begin(); it != dimList.end(); ++it) 
     {
      cout << *it << endl;
     }
     
+    cout << "-----------------------------------\n" << "Language field"  << endl; 
+    cout << "language - " << "Browser language using ISO-639-1-alpha-2." << endl << endl;
     for( it = languageList.begin(); it != languageList.end(); ++it) 
     {
     cout << *it << endl;
     }
     
+    cout << "-----------------------------------\n" << "Carrier field"  << endl; 
+    cout << "carrier - " << "Carrier or ISP (e.g., “VERIZON”). “WIFI” is often used in mobile to indicate high bandwidth (e.g., video friendly vs. cellular)." << endl << endl;
     for( it = carrierList.begin(); it != carrierList.end(); ++it) 
     {
     cout << *it << endl;
     }
+    
+    cout << "-----------------------------------\n" << "Model field"  << endl; 
+    cout << "model - " << "Device model (e.g., “iPhone”)." << endl << endl;
     for( it = modelList.begin(); it != modelList.end(); ++it) 
     {
     cout << *it << endl;
     }
+    
+    cout << "-----------------------------------\n" << "Make field"  << endl; 
+    cout << "make - " << "Device make (e.g., “Apple”)." << endl << endl;
     for( it = makeList.begin(); it != makeList.end(); ++it) 
     {
     cout << *it << endl;
     }
+    
+    cout << "-----------------------------------\n" << "Connectiontype field"  << endl; 
+    cout << "connectiontype - " << "Network connection type. Refer to List 5.20"<< endl;
+    cout << "0 Unknown" << endl; 
+    cout << "1 Ethernet"<< endl; 
+    cout << "2 WIFI"<< endl; 
+    cout << "3 Cellular Network – Unknown Generation"<< endl; 
+    cout << "4 Cellular Network – 2G"<< endl; 
+    cout << "5 Cellular Network – 3G"<< endl; 
+    cout << "6 Cellular Network – 4G" << endl  << endl; 
     for( it = connectiontypeList.begin(); it != connectiontypeList.end(); ++it) 
     {
     cout << *it << endl;
     }
+    
+    cout << "-----------------------------------\n" << "Device field"  << endl; 
+    cout << "devicetype - " << "The general type of device" << endl << endl;
     for( it = devicetypeList.begin(); it != devicetypeList.end(); ++it) 
     {
     cout << *it << endl;
     }
+    
+    cout << "-----------------------------------\n" << "Flashver field" << endl; 
+    cout << "flashver - " << "Version of Flash supported by the browser." << endl << endl;
     for( it = flashverList.begin(); it != flashverList.end(); ++it) 
     {
     cout << *it << endl;
     }
-    cout << "country" << endl;
+    cout << "-----------------------------------\n" << "Country field"  << endl; 
+    cout << "country - " << "Country code using ISO-3166-1-alpha-3.." << endl << endl;
     for( it = countryList.begin(); it != countryList.end(); ++it) 
     {
     cout << *it << endl;
     }
-    cout << "city field" << endl;
+    cout << "-----------------------------------\n" << "City field"  << endl; 
+    cout << "city - " << "City using United Nations Code for Trade & Transport Locations" << endl << endl;
     for( it = cityList.begin(); it != cityList.end(); ++it) 
     {
     cout << *it << endl;
     } 
-    cout << "user name field" << endl;
+    cout << "-----------------------------------\n" << "User name field"  << endl; 
+    cout << "user name - " << "Exchange-specific name for the data provider." << endl << endl;
     for( it = nameList.begin(); it != nameList.end(); ++it) 
     {
     cout << *it << endl;
     } 
-    cout << "2" << idList.size() << endl;
+    
 }
     
