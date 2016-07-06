@@ -4,6 +4,8 @@
 #include <list>
 #include <vector>
 #include <iostream>
+#include <map>
+
 using namespace std;
 void trim(string &s)
 {
@@ -28,6 +30,8 @@ int main() {
     
     list<string> appidList, appnameList, apppublishernameList;
     list<string> useryobList, userkeywordsList, usergenderList;
+    
+    map<string, int> modelmap, devicetypemap;
     
     while( std::getline(ifs, ss)) {
       if(ss.empty()) continue;
@@ -61,11 +65,7 @@ int main() {
     const Json::Value& data = user["data"];
     const Json::Value& root1 = data[0];
 
-    //if((country != "BLR") && (country !="UKR")) continue;
-   // cout << data << endl;
-    
-   // cout << "new id: " << app["id"].asString() << endl;
-  //  cout << "device ua: " << app["ua"].asString() << endl;
+  //Imp
 
    string s = device["hwv"].asString();
    string s1 = device["ua"].asString();
@@ -140,8 +140,22 @@ int main() {
    if((&usergender != 0) && (usergender != ""))  usergenderList.push_back(usergender);
    
   if((&language != 0) && (language != "")) languageList.push_back(language);
+  
 
     } 
+    
+    list<string>::iterator itt;
+    for( itt = modelList.begin(); itt != modelList.end(); ++itt) 
+    {
+      modelmap[*itt]++;
+    
+    }
+    
+    for( itt = devicetypeList.begin(); itt != devicetypeList.end(); ++itt) 
+    {
+      devicetypemap[*itt]++;
+    
+    }
     hwvList.sort();
     int hwvf = hwvList.size();
     hwvList.unique(); 
@@ -388,6 +402,27 @@ int main() {
     {
     cout << *it << endl;
     } 
+    
+    map <string,int>::iterator cur;
+	
+	int count = 0;
+	double z =0.0;
+	for (cur=modelmap.begin();cur!=modelmap.end();cur++)
+	{
+		z = (*cur).second*100.0/modelf;
+		char buff[100];
+		sprintf(buff,"%2.3f",z);
+		cout<<(*cur).first<<": "<< buff << "%"<<endl;//count+=(*cur).second;
+	}
+	
+	double z1 =0.0;
+	for (cur=devicetypemap.begin();cur!=devicetypemap.end();cur++)
+	{
+		z1 = (*cur).second*100.0/modelf;
+		char buff[100];
+		sprintf(buff,"%2.3f",z1);
+		cout<<(*cur).first<<": "<< buff << "%"<<endl;//count+=(*cur).second;
+	}
     
 }
     
