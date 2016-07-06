@@ -20,14 +20,19 @@ if (last==string::npos) //there are no trailing whitespaces
 s = s.substr(first, last-first+1);
 }
 int main() {
-    ifstream ifs("/home/fil/appodeal.txt");
+    ifstream ifs("/home/fil/appobel.txt");
     std::string ss;
     list<string> hwvList, uaList, idList, dimList, languageList, carrierList, modelList, makeList, connectiontypeList;
     list<string> devicetypeList, flashverList, countryList, cityList, nameList;
     while( std::getline(ifs, ss)) {
       if(ss.empty()) continue;
       if(ss == "-------") continue;
+      if(ss.length() > 3000) cout << ss << endl << "------" << endl;
       
+    }
+    return 0;
+}
+/*
     Json::Reader reader;
     Json::Value obj;
     reader.parse(ss, obj); // reader can also read strings
@@ -223,3 +228,4 @@ int main() {
     
 }
     
+*/
