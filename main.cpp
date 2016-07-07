@@ -7,6 +7,7 @@
 #include <map>
 
 using namespace std;
+
 void trim(string &s)
 {
 string::size_type first = s.find_first_not_of(' ');
@@ -22,7 +23,17 @@ if (last==string::npos) //there are no trailing whitespaces
  last=s.length()-1;
 s = s.substr(first, last-first+1);
 }
+
+std::string format_string(string s, int n) 
+{
+	if(s.size() >= n) return s;
+	int i = n - s.size();
+	for(int j = 0; j < i; j++) s.push_back(' ');
+	return s;
+	
+}
 int main() {
+	setlocale(LC_ALL,"");
     ifstream ifs("/home/fil/appobel.txt");
     std::string ss;
     list<string> hwvList, uaList, idList, dimList, languageList, carrierList, modelList, makeList, connectiontypeList;
@@ -31,7 +42,7 @@ int main() {
     list<string> appidList, appnameList, apppublishernameList;
     list<string> useryobList, userkeywordsList, usergenderList;
     
-    map<string, int> modelmap, devicetypemap;
+    map<string, int> modelmap, devicetypemap, appnamemap;
     
     while( std::getline(ifs, ss)) {
       if(ss.empty()) continue;
@@ -80,7 +91,7 @@ int main() {
    string country = geo["country"].asString();
    string city = geo["city"].asString();
    string zip = geo["zip"].asString();
-    string name = root1["name"].asString();
+   string name = root1["name"].asString();
    
    //app
    string appid = app["id"].asString();
@@ -139,7 +150,7 @@ int main() {
    if((&userkeywords != 0) && (userkeywords != ""))  userkeywordsList.push_back(userkeywords);
    if((&usergender != 0) && (usergender != ""))  usergenderList.push_back(usergender);
    
-  if((&language != 0) && (language != "")) languageList.push_back(language);
+   if((&language != 0) && (language != "")) languageList.push_back(language);
   
 
     } 
@@ -156,6 +167,13 @@ int main() {
       devicetypemap[*itt]++;
     
     }
+    
+    for( itt = appnameList.begin(); itt != appnameList.end(); ++itt) 
+    {
+      appnamemap[*itt]++;
+    
+    }
+    
     hwvList.sort();
     int hwvf = hwvList.size();
     hwvList.unique(); 
@@ -282,11 +300,21 @@ int main() {
     cout << "-----------------------------------\n" << "Model field"  << endl; 
     f = modelf*100/idList.size() ;
     cout << "model - " << "Device model (e.g., “iPhone”)." << endl << "frequency: " << f << "%" <<  endl;
-    for( it = modelList.begin(); it != modelList.end(); ++it) 
-    {
-    cout << *it << endl;
-    }
-    
+  //  for( it = modelList.begin(); it != modelList.end(); ++it) 
+   // {
+  //  cout << *it << endl;
+  //  }
+    map <string,int>::iterator cur;
+	
+	int count = 0;
+	double z =0.0;
+	for (cur=modelmap.begin();cur!=modelmap.end();cur++)
+	{
+		z = (*cur).second*100.0/modelf;
+		char buff[100];
+		sprintf(buff,"%2.3f",z);
+		cout << format_string((*cur).first+" : ", 50) << buff << "%"<<endl;//count+=(*cur).second;
+	}
     cout << "-----------------------------------\n" << "Make field"  << endl; 
     f = makef*100/idList.size() ;
     cout << "make - " << "Device make (e.g., “Apple”)." << endl << "frequency: " << f << "%" <<  endl;
@@ -313,10 +341,20 @@ int main() {
     cout << "-----------------------------------\n" << "Device field"  << endl; 
     f = devicetypef*100/idList.size() ;
     cout << "devicetype - " << "The general type of device" << endl << "frequency: " << f << "%" <<  endl;
-    for( it = devicetypeList.begin(); it != devicetypeList.end(); ++it) 
-    {
-    cout << *it << endl;
-    }
+   // for( it = devicetypeList.begin(); it != devicetypeList.end(); ++it) 
+   // {
+   // cout << *it << endl;
+   // }
+    
+    double z1 =0.0;
+	for (cur=devicetypemap.begin();cur!=devicetypemap.end();cur++)
+	{
+		z1 = (*cur).second*100.0/devicetypef;
+		char buff[100];
+		sprintf(buff,"%2.3f",z1);
+		cout << format_string((*cur).first+" : ", 55) << buff << "%"<<endl;//count+=(*cur).second;
+	}
+    
     
     cout << "-----------------------------------\n" << "Flashver field" << endl; 
     f = flashverf*100/idList.size() ;
@@ -366,10 +404,19 @@ int main() {
     cout << "-----------------------------------\n" << "Application name field"  << endl; 
     f = appnamef*100/idList.size() ;
     cout << "app name- " << "Application name" << endl << "frequency: " << f << "%" <<  endl;
-    for( it = appnameList.begin(); it != appnameList.end(); ++it) 
-    {
-    cout << *it << endl;
-    } 
+  //  for( it = appnameList.begin(); it != appnameList.end(); ++it) 
+  //  {
+  //  cout << *it << endl;
+  //  } 
+    
+    double z2 =0.0;
+	for (cur=appnamemap.begin();cur!=appnamemap.end();cur++)
+	{
+		z2 = (*cur).second*100.0/appnamef;
+		char buff[100];
+		sprintf(buff,"%2.3f",z2);
+		cout << format_string((*cur).first+" : ", 55) << buff << "%"<<endl;//count+=(*cur).second;
+	}
     
     cout << "-----------------------------------\n" << "Application publisher name field"  << endl; 
     f = apppublishernamef*100/idList.size() ;
@@ -403,26 +450,10 @@ int main() {
     cout << *it << endl;
     } 
     
-    map <string,int>::iterator cur;
+    
 	
-	int count = 0;
-	double z =0.0;
-	for (cur=modelmap.begin();cur!=modelmap.end();cur++)
-	{
-		z = (*cur).second*100.0/modelf;
-		char buff[100];
-		sprintf(buff,"%2.3f",z);
-		cout<<(*cur).first<<": "<< buff << "%"<<endl;//count+=(*cur).second;
-	}
 	
-	double z1 =0.0;
-	for (cur=devicetypemap.begin();cur!=devicetypemap.end();cur++)
-	{
-		z1 = (*cur).second*100.0/modelf;
-		char buff[100];
-		sprintf(buff,"%2.3f",z1);
-		cout<<(*cur).first<<": "<< buff << "%"<<endl;//count+=(*cur).second;
-	}
+    
     
 }
     
