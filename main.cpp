@@ -39,10 +39,9 @@ int main() {
     list<string> hwvList, uaList, idList, dimList, languageList, carrierList, modelList, makeList, connectiontypeList;
     list<string> devicetypeList, flashverList, countryList, cityList, nameList, zipList;
     
-    list<string> appidList, appnameList, apppublishernameList;
+    list<string> appidList, appnameList, apppublishernameList, appverList, appstoreUrlList, appcatList, appbundleList;
+    list<int> apppaidList;
     list<string> useryobList, userkeywordsList, usergenderList;
-    
-    map<string, int> modelmap, devicetypemap, appnamemap;
     
     while( std::getline(ifs, ss)) {
       if(ss.empty()) continue;
@@ -76,7 +75,7 @@ int main() {
     const Json::Value& data = user["data"];
     const Json::Value& root1 = data[0];
 
-  //Imp
+  //dev
 
    string s = device["hwv"].asString();
    string s1 = device["ua"].asString();
@@ -99,8 +98,9 @@ int main() {
    string appstoreUrl = app["storeUrl"].asString();
    string appbundle = app["bundle"].asString();
    string appver = app["ver"].asString();
-   string apppaid = app["paid"].asString();
-   string appcat = app["cat"].asString();
+   int apppaid = app["paid"].asInt();
+   const Json::Value& cat = app["cat"];
+   string appcat = cat[0].asString();
    string apppublishername = publisher["name"].asString();
    
    //user
@@ -128,6 +128,10 @@ int main() {
 
    trim(appid);
    trim(appname);
+   trim(appbundle);
+   trim(appstoreUrl);
+   trim(appver);
+   trim(appcat);
    trim(apppublishername);
    
    trim(useryob);
@@ -147,9 +151,15 @@ int main() {
    if((&city != 0) && (city != "")) cityList.push_back(city);
    if((&name != 0) && (name != "")) nameList.push_back(name);
    if((&zip != 0) && (zip != ""))  zipList.push_back(zip);
+   
    if((&appid != 0) && (appid != ""))  appidList.push_back(appid);
    if((&appname != 0) && (appname != ""))  appnameList.push_back(appname);
    if((&apppublishername != 0) && (apppublishername != ""))  apppublishernameList.push_back(apppublishername);
+   if((&appbundle != 0) && (appbundle != ""))  appbundleList.push_back(appbundle);
+   if((&appver != 0) && (appver != ""))  appverList.push_back(appver);
+   if((&appcat != 0))  appcatList.push_back(appcat);
+   if((&appstoreUrl != 0) && (appstoreUrl != ""))  appstoreUrlList.push_back(appstoreUrl);
+   if((&apppaid != 0))  apppaidList.push_back(apppaid);
    
    if((&useryob != 0))  useryobList.push_back(useryob);
    if((&userkeywords != 0) && (userkeywords != ""))  userkeywordsList.push_back(userkeywords);
@@ -160,25 +170,7 @@ int main() {
 
     } 
     
-    list<string>::iterator itt;
-    for( itt = modelList.begin(); itt != modelList.end(); ++itt) 
-    {
-      modelmap[*itt]++;
-    
-    }
-    
-    for( itt = devicetypeList.begin(); itt != devicetypeList.end(); ++itt) 
-    {
-      devicetypemap[*itt]++;
-    
-    }
-    
-    for( itt = appnameList.begin(); itt != appnameList.end(); ++itt) 
-    {
-      appnamemap[*itt]++;
-    
-    }
-    
+        
     hwvList.sort();
     int hwvf = hwvList.size();
     hwvList.unique(); 
@@ -193,72 +185,95 @@ int main() {
     
     languageList.sort();
     int languagef = languageList.size();
-    languageList.unique();
+ //   languageList.unique();
     
     carrierList.sort();
     int carrierf = carrierList.size();
-    carrierList.unique();
+//    carrierList.unique();
     
     modelList.sort();
     int modelf = modelList.size();
-    modelList.unique();
+ //   modelList.unique();
     
     makeList.sort();
     int makef = makeList.size();
-    makeList.unique();
+ //   makeList.unique();
     
     connectiontypeList.sort();
     int connectiontypef = connectiontypeList.size();
-    connectiontypeList.unique();
+ //   connectiontypeList.unique();
     
     devicetypeList.sort();
     int devicetypef = devicetypeList.size();
-    devicetypeList.unique();
+ //   devicetypeList.unique();
     
     flashverList.sort();
     int flashverf = flashverList.size();
-    flashverList.unique();
+ //   flashverList.unique();
     
     countryList.sort();
     int countryf = countryList.size();
-    countryList.unique();
+ //   countryList.unique();
     
     cityList.sort();
     int cityf = cityList.size();
-    cityList.unique();
+ //   cityList.unique();
     
     nameList.sort();
     int namef = nameList.size();
-    nameList.unique();
+//    nameList.unique();
     
     zipList.sort();
     int zipf = zipList.size();
-    zipList.unique();
+ //   zipList.unique();
     
+    ////////app
     
     appidList.sort();
     int appidf = appidList.size();
-    appidList.unique();
+ //   appidList.unique();
     
     appnameList.sort();
     int appnamef = appnameList.size();
-    appnameList.unique();
+ //   appnameList.unique();
     
     apppublishernameList.sort();
     int apppublishernamef = apppublishernameList.size();
-    apppublishernameList.unique();
+ //   apppublishernameList.unique();
+    
+    appverList.sort();
+    int appverf = appverList.size();
+ //   appverList.unique();
+    
+    appcatList.sort();
+    int appcatf = appcatList.size();
+ //   appcatList.unique();
+    
+    apppaidList.sort();
+    int apppaidf = apppaidList.size();
+ //   apppaidList.unique();
+    
+    appstoreUrlList.sort();
+    int appstoreUrlf = appstoreUrlList.size();
+//    appstoreUrlList.unique();
+    
+    appbundleList.sort();
+    int appbundlef = appbundleList.size();
+ //   appbundleList.unique();
+    
+    //user
     
     useryobList.sort();
     int useryobf = useryobList.size();
-    useryobList.unique();
+//    useryobList.unique();
     
     userkeywordsList.sort();
     int userkeywordsf = userkeywordsList.size();
-    userkeywordsList.unique();
+ //   userkeywordsList.unique();
     
     usergenderList.sort();
     int usergenderf = usergenderList.size();
-    usergenderList.unique();
+//    usergenderList.unique();
     
     cout << "Total number of jason requests: " <<  idList.size() << endl;
     cout << "-----------------------------------\n" << "HWV field" << endl;
@@ -325,21 +340,44 @@ int main() {
     f = zipf*100/idList.size() ;
     cout << "zip code - " << "User zip code" << endl << "frequency: " << f << "%" <<  endl;
 
+//Application output
+
+cout << "Information about app section" << endl;
     
     cout << "-----------------------------------\n" << "Application id field"  << endl; 
     f = appidf*100/idList.size() ;
     cout << "app id - " << "Application id" << endl << "frequency: " << f << "%" <<  endl;
  
-    
     cout << "-----------------------------------\n" << "Application name field"  << endl; 
     f = appnamef*100/idList.size() ;
-    cout << "app name- " << "Application name" << endl << "frequency: " << f << "%" <<  endl;
-
-
+    cout << "app name- " << "App name (may be aliased at the publisher’s request)" << endl << "frequency: " << f << "%" <<  endl;
     
     cout << "-----------------------------------\n" << "Application publisher name field"  << endl; 
     f = apppublishernamef*100/idList.size() ;
-    cout << "app publisher name- " << "Application name" << endl << "frequency: " << f << "%" <<  endl;
+    cout << "app publisher name- " << "Details about the Publisher (Section 3.2.8) of the app." << endl << "frequency: " << f << "%" <<  endl;
+    
+        cout << "-----------------------------------\n" << "Application ver field"  << endl; 
+    f = appverf*100/idList.size() ;
+    cout << "app ver - " << "Application version" << endl << "frequency: " << f << "%" <<  endl;
+    
+        cout << "-----------------------------------\n" << "Application cat field"  << endl; 
+    f = appcatf*100/idList.size() ;
+    cout << "app cat - " << "Array of IAB content categories of the app. Refer to List 5.1." << endl << "frequency: " << f << "%" <<  endl;
+    
+        cout << "-----------------------------------\n" << "Application paid field"  << endl; 
+    f = apppaidf*100/idList.size() ;
+    cout << "app paid - " << "0 = app is free, 1 = the app is a paid version." << endl << "frequency: " << f << "%" <<  endl;
+    
+        cout << "-----------------------------------\n" << "Application bundle field"  << endl; 
+    f = appbundlef*100/idList.size() ;
+    cout << "app bundle - " << "Application bundle or package name (e.g., com.foo.mygame);intended to be a unique ID across exchanges" << endl << "frequency: " << f << "%" <<  endl;
+    
+        cout << "-----------------------------------\n" << "Application storeUrl field"  << endl; 
+    f = appstoreUrlf*100/idList.size() ;
+    cout << "app storeUrl - " << "App store URL for an installed app; for QAG 1.5 compliance." << endl << "frequency: " << f << "%" <<  endl;
+    
+    
+    ///////////////////////////////////
 
     cout << "-----------------------------------\n" << "User year of birth"  << endl; 
     f = useryobf*100/idList.size() ;
